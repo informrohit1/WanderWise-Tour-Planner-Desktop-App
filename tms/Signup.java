@@ -1,19 +1,17 @@
 package tms;
 
 import java.awt.*;
-import javax.swing.*;
-import java.sql.*;
 import java.awt.event.*;
+import java.sql.*;
+import javax.swing.*;
 import javax.swing.border.*;
-
 
 public class Signup extends JFrame implements ActionListener {
 
-    private JTextField t1, t2,t3,t4;
+    private JTextField t1, t2, t3, t4;
 
     private JComboBox<String> comboBox;
     private JButton create, back;
-    
 
     public Signup() {
         setTitle("New User SignUp Page");
@@ -78,7 +76,7 @@ public class Signup extends JFrame implements ActionListener {
 
         comboBox = new JComboBox<>();
         comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Your NickName?", "Your Lucky Number?",
-                "Your child SuperHero?", "Your childhood Name ?"}));
+            "Your child SuperHero?", "Your childhood Name ?"}));
         comboBox.setBounds(250, 170, 150, 25);
         p1.add(comboBox);
 
@@ -115,10 +113,10 @@ public class Signup extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         try {
             Conn con = new Conn();
-            
+
             if (ae.getSource() == create) {
                 String sql = "INSERT INTO account(username, name, password, question, answer) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement st = con.c.prepareStatement(sql);
+                PreparedStatement st = con.prepareStatement(sql);
 
                 st.setString(1, t1.getText());
                 st.setString(2, t2.getText());
@@ -138,7 +136,7 @@ public class Signup extends JFrame implements ActionListener {
                 t2.setText("");
                 t3.setText("");
                 t4.setText("");
-                
+
                 st.close();
             }
 
@@ -146,8 +144,8 @@ public class Signup extends JFrame implements ActionListener {
                 this.setVisible(false);
                 new Login().setVisible(true);
             }
-			// Close PreparedStatement and Connection
-            con.c.close();
+            // Close PreparedStatement and Connection
+            con.close();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
@@ -161,5 +159,4 @@ public class Signup extends JFrame implements ActionListener {
         new Signup().setVisible(true);
     }
 
-    
 }
